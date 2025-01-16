@@ -3,20 +3,26 @@ import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
-import { getCollection } from 'astro:content';
-import FormattedDate from '../../components/FormattedDate.astro';
 
 const projects = [
-     {
-        title: "t1",
-        slug: "t1",
-        description: "d1"
-     },
-     {
-        title: "t2",
-        slug: "t2",
-        description: "d2"
-     },
+    {
+        title: 'ISS Tracker',
+        description: 'A website that tracks the location of the International Space Station',
+        links: ['https://msnctrl.netlify.app', 'https://github.com/abluetuba/mission-control'],
+        image: '/iss.jpg'
+    },
+    {
+        title: 'unoXdue',
+        description: 'A website that shows the results of the Serie A (Italian football league)',
+        links: ['https://unoxdue.netlify.app', 'https://github.com/abluetuba/unoxdue'],
+        image: '/unoxdue.jpg'
+    },
+    {
+        title: 'unoXdue - flutter',
+        description: 'Flutter version of unoXdue',
+        links: ['https://github.com/abluetuba/unoxdue-flutter'],
+        image: '/scores.jpg'
+    }
 ]
 ---
 
@@ -26,12 +32,11 @@ const projects = [
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
 			main {
-				width: 960px;
+				width: 100%;
 			}
 			ul {
 				display: flex;
 				flex-wrap: wrap;
-				flex-direction: column;
 				gap: 2rem;
 				list-style-type: none;
 				margin: 0;
@@ -41,7 +46,6 @@ const projects = [
 				/* width: calc(50% - 1rem); */
 			}
 			ul li * {
-				text-decoration: none;
 				transition: 0.2s ease;
 			}
 			ul li img {
@@ -55,10 +59,6 @@ const projects = [
 				margin: 0;
 				color: rgb(var(--black));
 				line-height: 1;
-			}
-			.description {
-				margin: 0;
-				color: rgb(var(--gray));
 			}
 
 			@media (max-width: 720px) {
@@ -79,13 +79,16 @@ const projects = [
 					{
 						projects.map((prj) => (
 							<li>
-								<a href={`/projects/${prj.slug}/`}>
-									{/* <img width={720} height={360} src={post.data.heroImage} alt="" /> */}
 									<h4 class="title">{prj.title}</h4>
 									<p class="description">
 										{prj.description}
 									</p>
-								</a>
+									{
+										prj.links.map((link) => (
+											<p><a href={link}>{link}</a></p>
+										))
+									}
+									<img src={prj.image} alt="" />
 							</li>
 						))
 					}
